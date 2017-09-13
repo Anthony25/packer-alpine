@@ -94,6 +94,9 @@ add_ssh_keys() {
 clean_up() {
     echo '==> Clean Up'
 
+    sed -i 's/PermitRootLogin yes//' "${TARGET_DIR}"/etc/ssh/sshd_config
+    chroot "${TARGET_DIR}" passwd -d root
+
     zerofile=$(mktemp "${TARGET_DIR}"/zerofile.XXXXXX)
     dd if=/dev/zero of="$zerofile" bs=1M || true
     rm -f "$zerofile"
