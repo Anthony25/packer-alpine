@@ -13,7 +13,8 @@ iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
-iface eth0 inet6 auto
+iface eth0 inet6 manual
+    pre-up echo 1 > /proc/sys/net/ipv6/conf/eth0/accept_ra
 "
 
 install_os() {
