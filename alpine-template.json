@@ -1,0 +1,56 @@
+{
+    "variables": {
+        "iso_url": "https://wiki.alpinelinux.org/cgi-bin/dl.cgi/v3.6/releases/x86_64/alpine-standard-3.6.2-x86_64.iso",
+        "iso_checksum_url": "https://wiki.alpinelinux.org/cgi-bin/dl.cgi/v3.6/releases/x86_64/alpine-standard-3.6.2-x86_64.iso.sha256",
+        "iso_checksum_type": "sha256",
+        "ssh_timeout": "20m",
+        "headless": "true",
+        "disk_size": "5120",
+        "format": "qcow2",
+        "hostname": "localhost",
+        "proxy": "none",
+        "swap_size": "0",
+        "authorized_keys": "",
+        "ip4": "",
+        "netmask4": "",
+        "ip6": "",
+        "netmask6": ""
+    },
+    "builders": [
+        {
+            "type": "qemu",
+            "iso_url": "{{ user `iso_url` }}",
+            "iso_checksum_url": "{{ user `iso_checksum_url` }}",
+            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+            "http_directory": "srv",
+            "boot_wait": "15s",
+            "shutdown_timeout": "30s",
+            "ssh_username": "root",
+            "ssh_password": "root",
+            "ssh_timeout": "{{ user `ssh_timeout` }}",
+            "boot_command": [
+                "root<enter><wait>",
+                "ip link set eth0 up && udhcpc -i eth0<enter><wait>",
+                "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh<enter><wait>",
+                "ash ./enable-ssh.sh<enter>"
+             ],
+            "disk_size": "{{ user `disk_size` }}",
+            "format": "{{ user `format` }}",
+            "vm_name": "{{ user `hostname` }}.{{ user `format` }}",
+            "shutdown_command": "poweroff",
+            "headless" : "{{ user `headless`}}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "answers",
+            "destination": "/root/answers"
+        },
+        {
+            "type": "shell",
+            "execute_command": "{{ .Vars }} AUTHORIZED_KEYS='{{ user `authorized_keys` }}' IP4='{{ user `ip4` }}' NETMASK4='{{ user `netmask4` }}' IP6='{{ user `ip6` }}' NETMASK6='{{ user `netmask6` }}' SWAPSIZE='{{ user `mirrorlist` }}' HOSTNAMEOPTS='{{ user `hostname` }}' PROXYOPTS='{{ user `proxy` }}' ash '{{ .Path }}'",
+            "script": "scripts/install-base.sh"
+        }
+    ]
+}

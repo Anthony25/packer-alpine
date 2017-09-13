@@ -1,0 +1,12 @@
+KEYMAPOPTS="us us"
+
+DNSOPTS="none"
+
+TIMEZONEOPTS="-z UTC"
+NTPOPTS="-c chrony"
+
+APKREPOSOPTS="-f"
+
+SSHDOPTS="-c openssh"
+
+DISKOPTS="-m sys /dev/vda"
