@@ -24,6 +24,7 @@ install_os() {
     prepare_chroot
     install_pkg
     enable_ipv6
+    add_ssh_keys
 
     clean_up
 }
