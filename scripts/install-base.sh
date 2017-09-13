@@ -23,8 +23,10 @@ install_os() {
 
     prepare_chroot
     install_pkg
+
     enable_ipv6
     add_ssh_keys
+    enable_serial_tty
 
     clean_up
 }
@@ -86,6 +88,19 @@ install_pkg() {
 
 enable_ipv6() {
     echo "ipv6" >> "$TARGET_DIR"/etc/modules
+}
+
+tweak_syslinux() {
+    sed -i 's/timeout=.*/timeout=1/' "$TARGET_DIR"/etc/update-extlinux.conf
+
+    chroot "$TARGET_DIR" update-extlinux
+}
+
+enable_serial_tty() {
+    echo "ttyS0::respawn:/sbin/getty -L ttyS0 115200 vt100" >> \
+        "$TARGET_DIR"/etc/inittab
+
+    echo "ttyS0" >> "$TARGET_DIR"/etc/securetty
 }
 
 add_ssh_keys() {
