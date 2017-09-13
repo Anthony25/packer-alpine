@@ -23,6 +23,7 @@ install_os() {
 
     prepare_chroot
     install_pkg
+    enable_ipv6
 
     clean_up
 }
@@ -80,6 +81,10 @@ install_pkg() {
     echo '==> Install packages'
 
     chroot "$TARGET_DIR" apk add python2
+}
+
+enable_ipv6() {
+    echo "ipv6" >> "$TARGET_DIR"/etc/modules
 }
 
 add_ssh_keys() {
