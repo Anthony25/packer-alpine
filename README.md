@@ -1,6 +1,8 @@
 Packer Alpine Linux
 ===================
 
+[![Build Status](https://travis-ci.org/Anthony25/packer-alpine.svg?branch=master)](https://travis-ci.org/Anthony25/packer-alpine)
+
 Packer Alpine is a bare bones [Packer](https://www.packer.io/) template and
 installation script that can be used to generate qemu image for [Alpine
 Linux](https://www.alpinelinux.org/).
@@ -36,3 +38,9 @@ more details):
 By default, the template enable DHCP and IPv6 autoconf, but a static IPv4 or
 IPv6 can also be specified through the variables `ip4`, `netmask4`, `ip6` and
 `netmask6`.
+
+License
+-------
+
+Tool under the BSD license. Do not hesitate to report bugs, ask me some
+questions or do some pull request if you want to!
