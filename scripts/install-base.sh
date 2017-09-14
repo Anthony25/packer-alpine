@@ -21,8 +21,9 @@ install_os() {
     install_pkg
 
     enable_ipv6
-    add_ssh_keys
     enable_serial_tty
+    tweak_syslinux
+    add_ssh_keys
 
     clean_up
 }
@@ -82,9 +83,8 @@ enable_ipv6() {
 }
 
 tweak_syslinux() {
+    sed -i 's/TIMEOUT */TIMEOUT 10/' "$TARGET_DIR"/boot/extlinux.conf
     sed -i 's/timeout=.*/timeout=1/' "$TARGET_DIR"/etc/update-extlinux.conf
-
-    chroot "$TARGET_DIR" update-extlinux
 }
 
 enable_serial_tty() {
