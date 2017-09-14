@@ -36,7 +36,7 @@ complete_answers_file() {
     INTERFACESOPTS=`echo "$INTERFACESOPTS"$'\n'"iface eth0 inet dhcp"`
     if [ -n "$IP4" ]; then
         INTERFACESOPTS=`echo "$INTERFACESOPTS" \
-            $'\n\tpost-up ip addr add ' "$IP4" $'dev eth0\n'`
+            $'\n\tpost-up ip addr add' "$IP4" $'dev eth0\n'`
     fi
 
     INTERFACESOPTS=`echo "$INTERFACESOPTS" \
@@ -44,7 +44,7 @@ complete_answers_file() {
         $'\n\tpre-up echo 1 > /proc/sys/net/ipv6/conf/eth0/accept_ra\n'`
     if [ -n "$IP6" ]; then
         INTERFACESOPTS=`echo "$INTERFACESOPTS" \
-            $'\n\tpost-up ip -6 addr add ' "$IP6" $'dev eth0\n'`
+            $'\n\tpost-up ip -6 addr add' "$IP6" $'dev eth0\n'`
     fi
 
     echo "INTERFACESOPTS=\"$INTERFACESOPTS\"" >> "$ANSWERS"
