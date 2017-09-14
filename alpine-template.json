@@ -13,9 +13,7 @@
         "swap_size": "0",
         "authorized_keys": "",
         "ip4": "",
-        "netmask4": "",
-        "ip6": "",
-        "netmask6": ""
+        "ip6": ""
     },
     "builders": [
         {
@@ -50,7 +48,7 @@
         },
         {
             "type": "shell",
-            "execute_command": "{{ .Vars }} AUTHORIZED_KEYS='{{ user `authorized_keys` }}' IP4='{{ user `ip4` }}' NETMASK4='{{ user `netmask4` }}' IP6='{{ user `ip6` }}' NETMASK6='{{ user `netmask6` }}' SWAPSIZE='{{ user `mirrorlist` }}' HOSTNAMEOPTS='{{ user `hostname` }}' PROXYOPTS='{{ user `proxy` }}' ash '{{ .Path }}'",
+            "execute_command": "{{ .Vars }} AUTHORIZED_KEYS='{{ user `authorized_keys` }}' IP4='{{ user `ip4` }}' IP6='{{ user `ip6` }}' SWAPSIZE='{{ user `mirrorlist` }}' HOSTNAMEOPTS='{{ user `hostname` }}' PROXYOPTS='{{ user `proxy` }}' ash '{{ .Path }}'",
             "script": "scripts/install-base.sh"
         }
     ]

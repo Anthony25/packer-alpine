@@ -32,12 +32,11 @@ It is possible to tweak the defined variables (see alpine-template.json for
 more details):
 
     $ packer build \
-        -vars ip4="192.168.0.10" netmask4="255.255.255.0" \
+        -vars ip4="192.168.0.10/24" \
         alpine-template.json
 
 By default, the template enable DHCP and IPv6 autoconf, but a static IPv4 or
-IPv6 can also be specified through the variables `ip4`, `netmask4`, `ip6` and
-`netmask6`.
+IPv6 can also be specified through the variables `ip4` and `ip6`.
 
 License
 -------

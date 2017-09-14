@@ -11,10 +11,6 @@ INTERFACESOPTS="auto lo
 iface lo inet loopback
 
 auto eth0
-iface eth0 inet dhcp
-
-iface eth0 inet6 manual
-    pre-up echo 1 > /proc/sys/net/ipv6/conf/eth0/accept_ra
 "
 
 install_os() {
@@ -37,25 +33,20 @@ complete_answers_file() {
     echo "HOSTNAMEOPTS=\"$HOSTNAMEOPTS\"" >> "$ANSWERS"
     echo "PROXYOPTS=\"$PROXYOPTS\"" >> "$ANSWERS"
 
-    if [ -n "$IP4" -a -z "$NETMASK4" -o -n "$IP6" -a -z "$NETMASK6" ]; then
-        echo "IP4 and IP6 should have a netmask"
-        exit 1
-    elif [ -n "$IP4" -o -n "$IP6" ]; then
-        INTERFACESOPTS=`echo "$INTERFACESOPTS"$'\n'"auto eth0:0"`
-
-        if [ -n "$IP4" ]; then
-            INTERFACESOPTS=`echo "$INTERFACESOPTS" \
-                $'\niface eth0:0 inet static' \
-                $'\n\taddress' "$IP4" \
-                $'\n\tnetmask' "$NETMASK4"`
-        fi
-        if [ -n "$IP6" ]; then
-            INTERFACESOPTS=`echo "$INTERFACESOPTS" \
-                $'\niface eth0:0 inet6 static' \
-                $'\n\taddress' "$IP6" \
-                $'\n\tnetmask' "$NETMASK6"`
-        fi
+    INTERFACESOPTS=`echo "$INTERFACESOPTS"$'\n'"iface eth0 inet dhcp"`
+    if [ -n "$IP4" ]; then
+        INTERFACESOPTS=`echo "$INTERFACESOPTS" \
+            $'\n\tpost-up ip addr add ' "$IP4" $'dev eth0\n'`
     fi
+
+    INTERFACESOPTS=`echo "$INTERFACESOPTS" \
+        $'\niface eth0 inet6 manual' \
+        $'\n\tpre-up echo 1 > /proc/sys/net/ipv6/conf/eth0/accept_ra\n'`
+    if [ -n "$IP6" ]; then
+        INTERFACESOPTS=`echo "$INTERFACESOPTS" \
+            $'\n\tpost-up ip -6 addr add ' "$IP6" $'dev eth0\n'`
+    fi
+
     echo "INTERFACESOPTS=\"$INTERFACESOPTS\"" >> "$ANSWERS"
 }
 
