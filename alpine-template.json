@@ -1,7 +1,7 @@
 {
     "variables": {
-        "iso_url": "https://wiki.alpinelinux.org/cgi-bin/dl.cgi/v3.6/releases/x86_64/alpine-virt-3.6.2-x86_64.iso",
-        "iso_checksum_url": "https://wiki.alpinelinux.org/cgi-bin/dl.cgi/v3.6/releases/x86_64/alpine-virt-3.6.2-x86_64.iso.sha256",
+        "iso_url": "https://wiki.alpinelinux.org/cgi-bin/dl.cgi/v3.7/releases/x86_64/alpine-virt-3.7.0-x86_64.iso",
+        "iso_checksum_url": "https://wiki.alpinelinux.org/cgi-bin/dl.cgi/v3.7/releases/x86_64/alpine-virt-3.7.0-x86_64.iso.sha256",
         "iso_checksum_type": "sha256",
         "boot_wait": "15s",
         "ssh_timeout": "20m",
