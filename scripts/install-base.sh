@@ -83,8 +83,9 @@ enable_ipv6() {
 }
 
 tweak_syslinux() {
-    sed -i 's/TIMEOUT */TIMEOUT 10/' "$TARGET_DIR"/boot/extlinux.conf
+    sed -i 's/TIMEOUT .*/TIMEOUT 10/' "$TARGET_DIR"/boot/extlinux.conf
     sed -i 's/timeout=.*/timeout=1/' "$TARGET_DIR"/etc/update-extlinux.conf
+    update-extlinux
 }
 
 enable_serial_tty() {
