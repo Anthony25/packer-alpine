@@ -1,7 +1,7 @@
 Packer Alpine Linux
 ===================
 
-[![Build Status](https://travis-ci.org/Anthony25/packer-alpine.svg?branch=master)](https://travis-ci.org/Anthony25/packer-alpine)
+[![Build Status](https://travis-ci.org/aruhier/packer-alpine.svg?branch=master)](https://travis-ci.org/aruhier/packer-alpine)
 
 Packer Alpine is a bare bones [Packer](https://www.packer.io/) template and
 installation script that can be used to generate qemu image for [Alpine
