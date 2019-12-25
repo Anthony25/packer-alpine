@@ -1,7 +1,7 @@
 {
     "variables": {
-        "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.10/releases/x86_64/alpine-virt-3.10.3-x86_64.iso",
-        "iso_checksum": "ac07c708733e37bb6982950f8dbd17660b44e2249b3eeb17c3e1ced9682059e0",
+        "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.11/releases/x86_64/alpine-virt-3.11.2-x86_64.iso",
+        "iso_checksum": "fbedd5fa113eee18876c293177d251b851bfe496a78b080b13e30ba1fd184bb2",
         "iso_checksum_type": "sha256",
         "boot_wait": "15s",
         "ssh_timeout": "20m",
