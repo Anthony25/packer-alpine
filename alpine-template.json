@@ -1,55 +1,54 @@
 {
-    "variables": {
-        "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.11/releases/x86_64/alpine-virt-3.11.2-x86_64.iso",
-        "iso_checksum": "fbedd5fa113eee18876c293177d251b851bfe496a78b080b13e30ba1fd184bb2",
-        "iso_checksum_type": "sha256",
-        "boot_wait": "15s",
-        "ssh_timeout": "20m",
-        "headless": "true",
-        "disk_size": "5120",
-        "format": "qcow2",
-        "hostname": "localhost",
-        "proxy": "none",
-        "swap_size": "0",
-        "authorized_keys": "",
-        "ip4": "",
-        "ip6": ""
+  "builders": [
+    {
+      "boot_command": [
+        "root<enter><wait>",
+        "ip link set eth0 up \u0026\u0026 udhcpc -i eth0<enter><wait>",
+        "wget -qO- http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh | ash<enter>"
+      ],
+      "boot_wait": "{{ user `boot_wait` }}",
+      "disk_size": "{{ user `disk_size` }}",
+      "format": "{{ user `format` }}",
+      "headless": "{{ user `headless`}}",
+      "http_directory": "srv",
+      "iso_checksum": "{{ user `iso_checksum_type` }}:{{ user `iso_checksum` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "shutdown_command": "poweroff",
+      "shutdown_timeout": "30s",
+      "ssh_password": "root",
+      "ssh_timeout": "{{ user `ssh_timeout` }}",
+      "ssh_username": "root",
+      "type": "qemu",
+      "vm_name": "{{ user `hostname` }}.{{ user `format` }}"
+    }
+  ],
+  "provisioners": [
+    {
+      "destination": "/root/answers",
+      "source": "answers",
+      "type": "file"
     },
-    "builders": [
-        {
-            "type": "qemu",
-            "iso_url": "{{ user `iso_url` }}",
-            "iso_checksum": "{{ user `iso_checksum` }}",
-            "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-            "http_directory": "srv",
-            "boot_wait": "{{ user `boot_wait` }}",
-            "shutdown_timeout": "30s",
-            "ssh_username": "root",
-            "ssh_password": "root",
-            "ssh_timeout": "{{ user `ssh_timeout` }}",
-            "boot_command": [
-                "root<enter><wait>",
-                "ip link set eth0 up && udhcpc -i eth0<enter><wait>",
-                "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/enable-ssh.sh<enter><wait>",
-                "ash ./enable-ssh.sh<enter>"
-             ],
-            "disk_size": "{{ user `disk_size` }}",
-            "format": "{{ user `format` }}",
-            "vm_name": "{{ user `hostname` }}.{{ user `format` }}",
-            "shutdown_command": "poweroff",
-            "headless" : "{{ user `headless`}}"
-        }
-    ],
-    "provisioners": [
-        {
-            "type": "file",
-            "source": "answers",
-            "destination": "/root/answers"
-        },
-        {
-            "type": "shell",
-            "execute_command": "{{ .Vars }} AUTHORIZED_KEYS='{{ user `authorized_keys` }}' IP4='{{ user `ip4` }}' IP6='{{ user `ip6` }}' SWAPSIZE='{{ user `mirrorlist` }}' HOSTNAMEOPTS='{{ user `hostname` }}' PROXYOPTS='{{ user `proxy` }}' ash '{{ .Path }}'",
-            "script": "scripts/install-base.sh"
-        }
-    ]
+    {
+      "execute_command": "{{ .Vars }} AUTHORIZED_KEYS='{{ user `authorized_keys` }}' IP4='{{ user `ip4` }}' IP6='{{ user `ip6` }}' SWAPSIZE='{{ user `mirrorlist` }}' HOSTNAMEOPTS='{{ user `hostname` }}' PROXYOPTS='{{ user `proxy` }}' ash '{{ .Path }}'",
+      "script": "scripts/install-base.sh",
+      "type": "shell"
+    }
+  ],
+  "variables": {
+    "authorized_keys": "",
+    "boot_wait": "15s",
+    "disk_size": "5120",
+    "format": "qcow2",
+    "headless": "true",
+    "hostname": "localhost",
+    "ip4": "",
+    "ip6": "",
+    "iso_checksum": "fe694a34c0e2d30b9e5dea7e2c1a3892c1f14cb474b69cc5c557a52970071da5",
+    "iso_checksum_type": "sha256",
+    "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/x86_64/alpine-virt-3.12.0-x86_64.iso",
+    "proxy": "none",
+    "ssh_timeout": "20m",
+    "swap_size": "0"
+  }
 }
+
