@@ -18,7 +18,6 @@ install_os() {
     yes "y" | setup-alpine -e -f "$ANSWERS"
 
     prepare_chroot
-    install_pkg
 
     enable_ipv6
     enable_serial_tty
@@ -70,12 +69,6 @@ prepare_chroot() {
     else
         mount -t tmpfs shm ./dev/shm -o mode=1777,nosuid,nodev
     fi
-}
-
-install_pkg() {
-    echo '==> Install packages'
-
-    chroot "$TARGET_DIR" apk add python2
 }
 
 enable_ipv6() {
